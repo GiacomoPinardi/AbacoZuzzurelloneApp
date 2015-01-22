@@ -25,14 +25,7 @@ public class GraphicInterface extends javax.swing.JFrame {
         dizionario = new ArrayList<>();
         random = new Random();
         
-        this.caricaDizionario();
-        
-        this.indexParola = this.getRandomNumber();
-                
-        this.currentPrima = 0;
-        this.currentUltima = dizionario.size() - 1;
-        
-        this.setInterfaccia(this.currentPrima, this.currentUltima);
+        this.startNewGame();
     }
 
     @SuppressWarnings("unchecked")
@@ -87,6 +80,11 @@ public class GraphicInterface extends javax.swing.JFrame {
         jMenu1.setText("Partita");
 
         jMenuItem1.setText("Nuova Partita");
+        jMenuItem1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jMenuItem1ActionPerformed(evt);
+            }
+        });
         jMenu1.add(jMenuItem1);
 
         jMenuBar1.add(jMenu1);
@@ -171,7 +169,15 @@ public class GraphicInterface extends javax.swing.JFrame {
         jLabel7.setText("");
     }//GEN-LAST:event_jLabel7MouseClicked
 
+    private void jMenuItem1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem1ActionPerformed
+        int r = JOptionPane.showConfirmDialog(rootPane, "Sei sicuro?\nI dati andranno persi.", "Nuova partita?", JOptionPane.OK_CANCEL_OPTION);
+        if (r == 0) {
+            this.startNewGame();
+        }        
+    }//GEN-LAST:event_jMenuItem1ActionPerformed
+
     private void caricaDizionario () {
+        dizionario.clear();
         try {
             File d = new File("data/dizionario.txt");
             lettore = new Scanner(d);
@@ -225,6 +231,18 @@ public class GraphicInterface extends javax.swing.JFrame {
         else {
             jLabel7.setText("ERRORE: per favore inserire una parola! [Click to hide]");
         }
+    }
+    
+    private void startNewGame () {
+        this.caricaDizionario();
+        
+        this.indexParola = this.getRandomNumber();
+                
+        this.currentPrima = 0;
+        this.currentUltima = dizionario.size() - 1;
+        
+        jTextField1.setText("");
+        this.setInterfaccia(this.currentPrima, this.currentUltima);
     }
     
     // Variables declaration - do not modify//GEN-BEGIN:variables
